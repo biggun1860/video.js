@@ -148,7 +148,7 @@ const TECH_EVENTS_RETRIGGER = [
   /**
    * Fires when the browser has loaded the current frame of the audio/video.
    *
-   * @event player#loadeddata
+   * @event Player#loadeddata
    * @type {event}
    */
   /**
@@ -164,7 +164,7 @@ const TECH_EVENTS_RETRIGGER = [
   /**
    * Fires when the current playback position has changed.
    *
-   * @event player#timeupdate
+   * @event Player#timeupdate
    * @type {event}
    */
   /**
@@ -180,7 +180,7 @@ const TECH_EVENTS_RETRIGGER = [
   /**
    * Fires when the playing speed of the audio/video is changed
    *
-   * @event player#ratechange
+   * @event Player#ratechange
    * @type {event}
    */
   /**
@@ -212,7 +212,7 @@ const TECH_EVENTS_RETRIGGER = [
   /**
    * Fires when the volume has been changed
    *
-   * @event player#volumechange
+   * @event Player#volumechange
    * @type {event}
    */
   /**
@@ -228,7 +228,7 @@ const TECH_EVENTS_RETRIGGER = [
   /**
    * Fires when the text track has been changed
    *
-   * @event player#texttrackchange
+   * @event Player#texttrackchange
    * @type {event}
    */
   /**
@@ -1747,10 +1747,11 @@ class Player extends Component {
    */
   duration(seconds) {
     if (seconds === undefined) {
-      return this.cache_.duration || 0;
+      // return NaN if the duration is not known
+      return this.cache_.duration !== undefined ? this.cache_.duration : NaN;
     }
 
-    seconds = parseFloat(seconds) || 0;
+    seconds = parseFloat(seconds);
 
     // Standardize on Inifity for signaling video is live
     if (seconds < 0) {
@@ -2246,17 +2247,19 @@ class Player extends Component {
   }
 
   /**
-   * The source function updates the video source
-   * There are three types of variables you can pass as the argument.
-   * **URL string**: A URL to the the video file. Use this method if you are sure
-   * the current playback technology (HTML5/Flash) can support the source you
-   * provide. Currently only MP4 files can be used in both HTML5 and Flash.
+   * Get or set the video source.
    *
-   * @param {Tech~SourceObject|Tech~SourceObject[]} [source]
-   *        One SourceObject or an array of SourceObjects
+   * @param {Tech~SourceObject|Tech~SourceObject[]|string} [source]
+   *        A SourceObject, an array of SourceObjects, or a string referencing
+   *        a URL to a media source. It is _highly recommended_ that an object
+   *        or array of objects is used here, so that source selection
+   *        algorithms can take the `type` into account.
    *
-   * @return {string}
-   *         The current video source when getting
+   *        If not provided, this method acts as a getter.
+   *
+   * @return {string|undefined}
+   *         If the `source` argument is missing, returns the current source
+   *         URL. Otherwise, returns nothing/undefined.
    */
   src(source) {
     // getter usage
@@ -3266,7 +3269,7 @@ class Player extends Component {
  * @return {TextTrackList}
  *         The current remote text track list
  *
- * @method Player.prototype.textTracks
+ * @method Player.prototype.remoteTextTracks
  */
 
 /**
