@@ -56,11 +56,10 @@ class ControlBar extends Component {
 ControlBar.prototype.options_ = {
   children: [
     'playToggle',
-    'volumePanel',
+    'progressControl',
     'currentTimeDisplay',
     'timeDivider',
     'durationDisplay',
-    'progressControl',
     'liveDisplay',
     'remainingTimeDisplay',
     'customControlSpacer',
@@ -69,6 +68,7 @@ ControlBar.prototype.options_ = {
     'descriptionsButton',
     'subsCapsButton',
     'audioTrackButton',
+    'volumePanel',
     'fullscreenToggle'
   ]
 };
