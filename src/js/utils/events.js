@@ -226,7 +226,8 @@ let _supportsPassive = false;
  */
 const passiveEvents = [
   'touchstart',
-  'touchmove'
+  'touchmove',
+  'mousewheel'
 ];
 
 /**
