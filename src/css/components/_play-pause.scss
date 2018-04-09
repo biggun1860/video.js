@@ -9,3 +9,7 @@
 .video-js .vjs-play-control.vjs-ended .vjs-icon-placeholder {
   @extend .vjs-icon-replay;
 }
+
+.video-js .vjs-play-control.vjs-stop .vjs-icon-placeholder {
+  @extend .vjs-icon-stop;
+}
