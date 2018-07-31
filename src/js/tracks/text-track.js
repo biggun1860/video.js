@@ -7,7 +7,7 @@ import {TextTrackKind, TextTrackMode} from './track-enums';
 import log from '../utils/log.js';
 import window from 'global/window';
 import Track from './track.js';
-import { isCrossOrigin } from '../utils/url.js';
+import { isCrossOrigin, getFileExtension } from '../utils/url.js';
 import XHR from 'xhr';
 import merge from '../utils/merge-options';
 import * as browser from '../utils/browser.js';
@@ -24,6 +24,11 @@ import * as browser from '../utils/browser.js';
  * @private
  */
 const parseCues = function(srcContent, track) {
+  // srt fix
+  if (getFileExtension(track.src) === 'srt') {
+    srcContent = 'WEBVTT\n\n' + srcContent.replace(/0(\d{2}):0(\d{2}):(\d+),(\d+)/g, '$1:$2:$3.$4');
+  }
+
   const parser = new window.WebVTT.Parser(window,
                                           window.vttjs,
                                           window.WebVTT.StringDecoder());
